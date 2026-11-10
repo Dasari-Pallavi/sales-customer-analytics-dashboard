@@ -1,61 +1,86 @@
 # AI-Powered Sales & Customer Analytics Dashboard
 
-**Role:** Business Analyst | **Tools:** Jira (Scrum), Python, SQL, Power BI, Git/GitHub  
-**Dataset:** [Online Retail II UCI (Kaggle)](https://kaggle.com)
+A Business Analyst portfolio project: from business problem and requirements
+(BRD, user stories, acceptance criteria, Jira/Scrum) to data analysis, customer
+segmentation, forecasting and a Power BI dashboard.
 
-## 📌 Business Problem & Objectives
-A UK-based online giftware retailer processing over 1.06 million transactions (2009–2011) relied on manual spreadsheet reporting, resulting in delayed visibility, unquantified return losses, and untargeted marketing. 
+![Dashboard overview](images/dashboard_1_overview.png)
 
-This end-to-end Business Analysis project delivers an automated **4-page Power BI decision-support dashboard** backed by formal requirements documentation, Agile Scrum delivery, RFM + K-Means customer segmentation, and a 6-month statistical sales forecast.
+## Business problem
+Reporting for an online gift-ware retailer is manual and slow. Management cannot see
+revenue trends, cancellation losses or customer segments, and has no forecast.
+(Retailer scenario built on a public dataset; business context is simulated.)
 
-### Scope & Data Governance
-* **In-Scope:** Gross Revenue, Cancellations/Returns, Net Revenue (`Quantity × Price`), Average Order Value (AOV), Country-level performance, Repeat Customer Rate, RFM + K-Means clustering, and 6-month revenue forecasting.
-* **Data Constraint (Out-of-Scope):** Cost of Goods Sold (COGS) is unavailable in the source dataset; profitability metrics are documented as out-of-scope in the BRD. Guest transactions (`Customer ID` null) are retained for store-wide revenue totals and excluded from customer-level RFM clustering.
+## Objectives
+1. One dashboard for revenue, orders and customer KPIs
+2. Track revenue lost to cancellations
+3. Segment customers for targeted marketing
+4. Forecast the next 6 months of revenue
+5. Reduce manual reporting effort
 
----
+## My role: Business Analyst
+- Documented requirements: BRD, 5 user stories with acceptance criteria, KPI definitions
+- Managed work in Jira (Scrum): 6 epics, 3 one-week sprints
+- Defined data rules, analysed data and translated results into recommendations
+- Built a traceability matrix and ran UAT (17 test cases plus automated checks)
 
-## 🛠️ Agile Delivery & Business Analysis Artifacts
-* **Problem Statement & RACI Matrix:** `docs/01_problem_statement.md`, `docs/02_stakeholder_analysis.md`
-* **Business Requirements Document (BRD):** `docs/03_BRD.md`
-* **User Stories & Acceptance Criteria:** `docs/04_user_stories_acceptance_criteria.md`
-* **KPI Definitions & Data Dictionary:** `docs/06_kpi_definitions.md`, `docs/10_data_dictionary.md`
-* **Traceability & Testing:** `docs/07_requirements_traceability_matrix.md`, `docs/08_UAT_test_cases.md`
-* **Jira Scrum Execution:** Managed 4 Epics and 12 User Stories across 3 Sprints (`docs/09_jira_sprint_summary.md`).
+## Dataset
+[Online Retail II (Kaggle)](https://www.kaggle.com/datasets/mashlyn/online-retail-ii-uci):
+about 1.07M transaction lines of a UK online retailer, Dec 2009 to Dec 2011.
+The raw file is not stored here; download it into `data/raw/`.
 
-### Jira Scrum Board & Backlog
-![Jira Backlog](images/jira_backlog.png)
-![Jira Board](images/jira_board.png)
+## Tools
+Jira, Python (pandas, scikit-learn, statsmodels, matplotlib), SQL, Power BI, Git/GitHub, draw.io/Mermaid
 
----
+## Workflow
+Problem and stakeholders > BRD and user stories > data quality check > cleaning
+> KPIs > RFM and K-Means > forecast > Power BI dashboard > UAT > recommendations
 
-## 📊 Power BI Dashboard Preview (4 Pages)
+## Key results
 
-### 1. Executive Overview
-![Executive Overview](images/dashboard_p1_overview.png)
+| Area | Result |
+|---|---|
+| Revenue / Orders / Customers | £[ ] / [ ] / [ ] |
+| Cancellation rate | [ ]% of revenue |
+| Repeat customers | [ ]% |
+| Champions + Loyal | [ ]% of customers, [ ]% of revenue |
+| Forecast accuracy | MAPE [ ]% on a 4-month back-test |
+| UAT | 17 of 17 tests passed |
 
-### 2. Product & Return Leakage
-![Product & Return Leakage](images/dashboard_p2_products.png)
+## Top recommendations
+1. **Peak Inventory Planning:** Raise stock 4–6 weeks ahead of September–November seasonal surges using the 6-month forecast confidence range.
+2. **At-Risk Customer Win-Back:** Launch a targeted retention campaign for the [ ] At-Risk customers holding £[ ] in historical revenue.
+3. **International Market Expansion:** Reduce UK revenue dependency ([ ]%) by running targeted growth campaigns in the top 3 non-UK markets ([ ], [ ], [ ]).
 
-### 3. AI Customer Segmentation (RFM + K-Means)
-![AI Customer Segmentation](images/dashboard_p3_customers.png)
+Full list: [docs/15_final_recommendations.md](docs/15_final_recommendations.md)
 
-### 4. 6-Month AI Revenue Forecast
-![AI Revenue Forecast](images/dashboard_p4_forecast.png)
+## Screenshots
 
----
+| Segments | Forecast |
+|---|---|
+| ![Segments](images/dashboard_4_segments.png) | ![Forecast](images/dashboard_5_forecast.png) |
 
-## 📈 Exploratory Data Analysis & AI Modeling Charts
-* **Monthly Revenue Trend:** `outputs/charts/01_monthly_revenue_trend.png`
-* **Top International Markets:** `outputs/charts/02_top_international_markets.png`
-* **RFM Customer Clusters:** `outputs/charts/03_rfm_customer_segments.png`
-* **6-Month Holt-Winters Forecast:** `outputs/charts/04_sales_6m_forecast.png`
+![Process map](images/process_as_is_to_be.png)
+![Jira board](images/jira_board.png)
 
----
+## Documentation
 
-## 📂 Repository Structure
-* `docs/` — BRD, User Stories, Acceptance Criteria, KPI Definitions, RTM, UAT Logs, Data Dictionary, and Jira Summary
-* `src/` — Python pipelines for data cleaning (`01_data_cleaning.py`) and EDA/RFM/forecasting (`02_eda_rfm_forecast.py`)
-* `dashboard/` — Power BI Desktop file (`Sales_Customer_Analytics.pbix`)
-* `outputs/` — Exported EDA/AI charts and final Executive Insights Report
-* `images/` — Jira board screenshots and Power BI dashboard page captures
-* `data/` — Raw and processed directory structure (raw CSV excluded via `.gitignore`; download from Kaggle link above)
+| Document | File |
+|---|---|
+| Problem statement | [docs/01](docs/01_problem_statement.md) |
+| Stakeholders | [docs/02](docs/02_stakeholder_analysis.md) |
+| BRD | [docs/03](docs/03_BRD.md) |
+| User stories | [docs/04](docs/04_user_stories_acceptance_criteria.md) |
+| As-Is / To-Be | [docs/05](docs/05_process_as_is_to_be.md) |
+| KPI definitions | [docs/06](docs/06_kpi_definitions.md) |
+| Traceability matrix | [docs/07](docs/07_requirements_traceability_matrix.md) |
+| UAT | [docs/08](docs/08_UAT_test_cases.md) |
+| Jira summary | [docs/09](docs/09_jira_sprint_summary.md) |
+| Data dictionary | [docs/10](docs/10_data_dictionary.md) |
+| Insights | [docs/11](docs/11_initial_insights.md) |
+| Segment playbook | [docs/12](docs/12_segment_playbook.md) |
+| Forecast summary | [docs/13](docs/13_forecast_summary.md) |
+| Dashboard design | [docs/14](docs/14_dashboard_design.md) |
+| Recommendations | [docs/15](docs/15_final_recommendations.md) |
+
+## Folder structure
