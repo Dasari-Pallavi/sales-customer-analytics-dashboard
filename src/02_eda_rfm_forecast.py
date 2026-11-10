@@ -1,4 +1,3 @@
-cat << 'EOF' > src/02_eda_rfm_forecast.py
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
@@ -132,6 +131,3 @@ plt.savefig("outputs/charts/04_sales_6m_forecast.png", dpi=300)
 plt.close()
 
 print("Saved all EDA charts, RFM segments, and 6-month forecast CSVs!")
-EOF
-
-python src/02_eda_rfm_forecast.py
