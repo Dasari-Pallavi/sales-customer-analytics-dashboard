@@ -1,0 +1,5 @@
+model,MAPE_%,MAE_£
+Seasonal naive (same month last year),6.142121788985231,61884.94974999994
+Damped trend (no season),27.000006163424572,342192.31050379865
+Holt-Winters (additive trend + season),,
+Holt-Winters (damped trend + season),,
