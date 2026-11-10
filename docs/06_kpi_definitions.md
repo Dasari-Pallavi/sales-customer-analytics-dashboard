@@ -1,14 +1,18 @@
-cat << 'EOF' > docs/06_kpi_definitions.md
-# KPI Definitions & Business Logic
+# KPI Definitions
 
-1. **Gross Revenue (£):** `SUM(Quantity * Price)` for all valid non-cancelled orders (`Quantity > 0` and `Price > 0`).
-2. **Cancelled / Return Value (£):** `ABS(SUM(Quantity * Price))` for invoices starting with `'C'`.
-3. **Net Revenue (£):** `Gross Revenue - Cancelled Value`.
-4. **Return / Cancellation Rate (%):** `(Cancelled Value / Gross Revenue) * 100`.
-5. **Total Completed Orders:** `COUNT(DISTINCT Invoice)` excluding `'C'` prefixed invoices.
-6. **Average Order Value (AOV):** `Gross Revenue / Total Completed Orders`.
-7. **Active Identifiable Customers:** `COUNT(DISTINCT Customer ID)` where `Customer ID IS NOT NULL`.
-8. **Repeat Customer Rate (%):** `(Customers with >1 distinct Invoice / Total Identifiable Customers) * 100`.
-9. **Month-over-Month (MoM) Revenue Growth (%):** `((Current Month Revenue - Prior Month Revenue) / Prior Month Revenue) * 100`.
-10. **Customer Lifetime Value (Historical):** `SUM(Quantity * Price)` per unique `Customer ID`.
-EOF
+| KPI | Definition | Formula | Data used | Linked requirement |
+|---|---|---|---|---|
+| Total Revenue | Value of valid sales in GBP | SUM(quantity x price) | Clean sales rows | FR-01 |
+| Total Orders | Number of distinct sales invoices | COUNT DISTINCT invoice | Clean sales rows | FR-01 |
+| Total Customers | Distinct customers with an ID | COUNT DISTINCT customer_id | Rows with customer ID | FR-01 |
+| Average Order Value (AOV) | Average revenue per order | Total Revenue / Total Orders | Clean sales rows | FR-01 |
+| MoM Growth % | Revenue change vs previous month | (This month - Last month) / Last month x 100 | Monthly revenue | FR-03 |
+| Cancelled Value | Value of cancelled invoices | SUM(ABS(quantity x price)) for invoices starting with C | Cancellation rows | FR-06 |
+| Cancellation Rate % | Revenue lost to cancellations | Cancelled Value / Total Revenue x 100 | Both tables | FR-06 |
+| Repeat Customer % | Customers with 2+ orders | Customers with 2+ invoices / Total Customers x 100 | Rows with customer ID | FR-10 |
+| Revenue Share by Country | Country contribution | Country revenue / Total Revenue x 100 | Clean sales rows | FR-04 |
+
+## Notes
+- The last month in the data (Dec 2011) is incomplete and is excluded from growth and forecasting.
+- Customer-based KPIs use only rows with a Customer ID (see CR-05).
+- RFM scoring rules will be added in the next step.
