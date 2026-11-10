@@ -1,35 +1,90 @@
-cat << 'EOF' > docs/03_BRD.md
 # Business Requirements Document (BRD)
-**Project Name:** AI-Powered Sales & Customer Analytics Dashboard  
-**Dataset:** Online Retail II (UCI / Kaggle)  
-**Document Version:** 1.0  
-**Author:** Dasari Pallavi (Business Analyst)  
+**Project:** AI-Powered Sales & Customer Analytics Dashboard
+**Version:** 1.0 | **Author:** [Pallavi Dasari], Business Analyst | **Date:** 10-Nov-2026
+**Status:** Draft for stakeholder review
 
----
+## 1. Document Control
+| Version | Date | Author | Change |
+|---|---|---|---|
+| 0.1 | 10-Nov-2026 | [Pallavi Dasari] | First draft |
+| 1.0 | 10-Nov-2026 | [Pallavi Dasari] | Ready for review |
 
-## 1. Executive Summary
-A UK-based online giftware retailer processes over 1.06 million transactions across 2009–2011. Leadership currently relies on manual spreadsheet consolidation, resulting in delayed reporting, unquantified return losses, and generic marketing campaigns. This project delivers an automated, AI-powered Power BI dashboard featuring clean revenue KPIs, return-rate tracking, RFM customer segmentation, and a 6-month statistical sales forecast.
+## 2. Executive Summary
+Reporting at Superstore Retail Co. is manual and slow, and the business cannot see
+revenue trends, cancellation losses or customer segments. This project delivers a
+self-service dashboard with KPIs, RFM customer segmentation and a 6-month revenue
+forecast, built on the Online Retail II dataset.
 
-## 2. Business Objectives
-* **Eliminate Manual Reporting:** Reduce monthly reporting turnaround from 3 business days to automated self-service views.
-* **Quantify Return Leakage:** Isolate cancelled invoices (prefixed with `"C"`) to measure true Net Revenue and identify high-return SKUs.
-* **Enable Precision Marketing:** Group ~4,300+ identifiable customers into actionable behavioral clusters (Champions, Loyal, At-Risk, Lost).
-* **Support Inventory Planning:** Provide a 6-month revenue forecast to prepare stock levels for Q4 seasonal spikes.
+## 3. Business Problem and Objectives
+See docs/01_problem_statement.md.
 
-## 3. Scope & Data Constraints
-* **In-Scope:** Gross Revenue, Cancellations/Returns, Net Revenue (`Quantity × Price`), Average Order Value (AOV), Country-level performance, Repeat Customer Rate, RFM + K-Means clustering, and 6-month time-series forecasting.
-* **Out-of-Scope (Data Constraint):** The source dataset lacks Cost of Goods Sold (COGS) and supplier margin fields. Therefore, Gross Profit and Net Profit Margin KPIs are excluded from this release.
-* **Data Governance Rule:** Transactions with missing `Customer ID` (~243,000 guest checkouts) are retained for store-wide revenue totals but excluded from customer-level RFM segmentation.
+| ID | Objective | Measure of success |
+|---|---|---|
+| BO-1 | One dashboard for revenue, orders and customer KPIs | Dashboard totals reconcile 100% with source data |
+| BO-2 | Track revenue lost to cancellations | Cancellation rate shown by month and country |
+| BO-3 | Segment customers for targeted marketing | 4+ segments with downloadable lists |
+| BO-4 | Provide a revenue forecast | 6-month forecast with error (MAPE) reported |
+| BO-5 | Reduce reporting effort | Report time drops from ~3 days to minutes |
 
-## 4. Functional Requirements (FR)
-* **FR-01 (Executive KPIs):** The dashboard shall display Net Revenue, Total Orders, Active Customers, AOV, and Cancellation Rate %, filterable by Year, Month, and Country.
-* **FR-02 (Product & Return Analysis):** The dashboard shall rank the Top 10 revenue-generating products and Top 10 most-returned products by cancelled value.
-* **FR-03 (Geographic Breakdown):** The dashboard shall compare UK domestic revenue against international markets (e.g., EIRE, Netherlands, Germany, France).
-* **FR-04 (AI Customer Segmentation):** The system shall score identifiable customers on Recency, Frequency, and Monetary value and cluster them into 4 segments using K-Means.
-* **FR-05 (AI Revenue Forecasting):** The dashboard shall display a 6-month forward revenue forecast with upper and lower confidence intervals.
+## 4. Scope
+**In scope:** revenue, orders, customers, products, countries, cancellations, RFM, forecast.
+**Out of scope:** profit and cost analysis, real-time data, payment and logistics data.
 
-## 5. Non-Functional Requirements (NFR)
-* **NFR-01 (Performance):** Dashboard slicers and visual cross-filters must update in under 5 seconds.
-* **NFR-02 (Reconciliation):** Dashboard Net Revenue and Order Counts must match validated SQL/Python outputs with 0% variance.
-* **NFR-03 (Usability):** Visuals must follow a 4-page executive layout with clear titles and AI Smart Narrative summaries.
-EOF
+## 5. Stakeholders
+See docs/02_stakeholder_analysis.md.
+
+## 6. Current State (As-Is) and Future State (To-Be)
+**As-Is:** Export data > clean manually in Excel > build pivot tables > email report (about 3 days).
+**To-Be:** Data loaded and cleaned by script > dashboard refreshes > managers filter and
+explore on their own (minutes).
+
+## 7. Functional Requirements
+| ID | Requirement | Priority | Objective |
+|---|---|---|---|
+| FR-01 | Show total revenue, total orders, total customers and average order value as KPI cards | Must | BO-1 |
+| FR-02 | Allow filtering by year, month, country and product | Must | BO-1 |
+| FR-03 | Show monthly revenue trend with month-on-month growth % | Must | BO-1 |
+| FR-04 | Show revenue by country (map or bar chart) | Must | BO-1 |
+| FR-05 | Show top 10 and bottom 10 products by revenue | Must | BO-1 |
+| FR-06 | Show cancellation count, cancelled value and cancellation rate % | Must | BO-2 |
+| FR-07 | Classify each customer into an RFM segment | Must | BO-3 |
+| FR-08 | Show segment size, average spend and a downloadable customer list | Should | BO-3 |
+| FR-09 | Show a 6-month revenue forecast with a confidence range | Should | BO-4 |
+| FR-10 | Show repeat-customer % | Could | BO-1 |
+
+## 8. Non-Functional Requirements
+| ID | Requirement |
+|---|---|
+| NFR-01 | Each dashboard page loads within 5 seconds |
+| NFR-02 | Dashboard works in Power BI Desktop and as an exported PDF |
+| NFR-03 | Data refresh is monthly |
+| NFR-04 | All metric definitions are documented (docs/06_kpi_definitions.md) |
+| NFR-05 | Dashboard is readable on a standard laptop screen |
+
+## 9. Data Requirements
+- **Source:** Online Retail II (Kaggle / UCI), 1,067,371 rows, Dec 2009 to Dec 2011.
+- **Fields:** Invoice, StockCode, Description, Quantity, InvoiceDate, Price, Customer ID, Country.
+- **Business rules:**
+  - Revenue = Quantity x Price (GBP).
+  - Invoice starting with "C" = cancellation.
+  - Rows with missing Customer ID are excluded from customer-level analysis only.
+  - Rows with Price <= 0 are excluded.
+  - Duplicate rows are removed.
+- **Data quality:** see docs/10_data_dictionary.md.
+
+## 10. Assumptions, Constraints, Dependencies
+- Historical data represents normal business behaviour.
+- No cost data exists, so profit analysis is not possible.
+- Power BI Desktop (free) is the dashboard tool.
+
+## 11. Risks
+See docs/01_problem_statement.md.
+
+## 12. Acceptance and Sign-off
+The project is accepted when all Must requirements pass UAT (docs/08_UAT_test_cases).
+
+| Name | Role | Signature | Date |
+|---|---|---|---|
+| | Sales Head | | |
+| | Marketing Manager | | |
+| | Finance Manager | | |
