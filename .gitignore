@@ -218,3 +218,11 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# Data files & virtual environment
+data/raw/*.csv
+data/raw/*.xlsx
+data/processed/*.csv
+!data/**/.gitkeep
+.venv/
+.ipynb_checkpoints/
