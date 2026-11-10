@@ -69,3 +69,5 @@ print("Bottom 10 products:"); display(bottom10)
 | 4 | Cancellation rate is [ ]% by value (highest in [month]) | Revenue lost to returns | Investigate causes in high months |
 | 5 | Repeat-customer rate is [ ]% | Customer loyalty level | Retention campaign for one-time buyers |
 | 6 | Top 10 products give [ ]% of product revenue | Concentration in a few products | Protect stock of top sellers |
+| 7 | Revenue peaks in [months] in both years | Strong seasonality | Build stock ahead of the peak |
+| 8 | Forecast shows £[ ] for the next 6 months (back-test MAPE [ ]%) | Planning baseline | Use as a guide with the 80% range |
