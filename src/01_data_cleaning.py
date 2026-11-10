@@ -1,4 +1,3 @@
-cat << 'EOF' > src/01_data_cleaning.py
 import pandas as pd
 import numpy as np
 import os
@@ -53,6 +52,3 @@ returns_df.to_csv("data/processed/returns_clean.csv", index=False)
 print(f"Clean valid sales rows: {len(sales_df):,}")
 print(f"Clean return/cancellation rows: {len(returns_df):,}")
 print("Saved to data/processed/ successfully!")
-EOF
-
-python src/01_data_cleaning.py
