@@ -1,0 +1,14 @@
+check,result,detail
+CR-01 no duplicate rows in sales,PASS,
+CR-02 no cancellation invoices in sales,PASS,
+CR-03 no price <= 0 in sales,PASS,
+No negative quantity in sales,PASS,
+Total revenue equals KPI file,PASS,"20,476,260.45 vs 20,476,260.45"
+Sum of monthly revenue equals total,PASS,
+Sum of country revenue equals total,PASS,
+Total orders equals KPI file,PASS,
+RFM has one row per customer,PASS,
+At least 4 RFM segments,PASS,6 segments
+RFM scores within 1-5,PASS,
+Forecast has 6 months,PASS,
+Forecast sits inside its range,PASS,
